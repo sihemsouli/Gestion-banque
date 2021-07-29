@@ -26,7 +26,7 @@ public class Compte implements Serializable   {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected int livret_compteN;
 	protected String numeroCompte;
-	
+//compte
 	@Temporal (TemporalType.DATE)
 	protected Date   date_ouverture;
 	protected String nom;
