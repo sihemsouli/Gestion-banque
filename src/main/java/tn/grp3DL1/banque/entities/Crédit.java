@@ -1,53 +1,57 @@
 package tn.grp3DL1.banque.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="TYPE",length=4)
 public class Crédit implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	private String type;
-	private String duree_echeance;
+	private String typ;
+	private Long duree_echeance;
 	private Long montant_crédit;
 	private Long echeance_mois;
 	
-	@Enumerated(EnumType.STRING)
-	private  Nature_taux nature;
 	
-	@ManyToOne
-	private Client client;
-
+	@OneToMany(mappedBy="crédit",fetch= FetchType.LAZY)
+	private List <Client> clients;
+	
 	public Crédit() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
 	
-
-	public Crédit( String type, String duree_echeance, Long montant_crédit, Long echeance_mois,
-			Nature_taux nature) {
+	public Crédit(Long id, String typ, Long duree_echeance, Long montant_crédit,
+			Long echeance_mois,
+			List<Client> clients) {
 		super();
-		this.type = type;
+		this.id = id;
+		this.typ = typ;
 		this.duree_echeance = duree_echeance;
 		this.montant_crédit = montant_crédit;
 		this.echeance_mois = echeance_mois;
-		this.nature = nature;
+		this.clients = clients;
 	}
-
 
 
 	public Long getId() {
@@ -58,19 +62,32 @@ public class Crédit implements Serializable {
 		this.id = id;
 	}
 
-	public String getType() {
-		return type;
+	
+
+	public String getTyp() {
+		return typ;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+
+	public void setTyp(String typ) {
+		this.typ = typ;
 	}
 
-	public String getDuree_echeance() {
+	public List<Client> getClients() {
+		return clients;
+	}
+
+
+	public void setClients(List<Client> clients) {
+		this.clients = clients;
+	}
+
+
+	public Long getDuree_echeance() {
 		return duree_echeance;
 	}
 
-	public void setDuree_echeance(String duree_echeance) {
+	public void setDuree_echeance(Long duree_echeance) {
 		this.duree_echeance = duree_echeance;
 	}
 
@@ -90,13 +107,6 @@ public class Crédit implements Serializable {
 		this.echeance_mois = echeance_mois;
 	}
 
-	public Nature_taux getNature() {
-		return nature;
-	}
-
-	public void setNature(Nature_taux nature) {
-		this.nature = nature;
-	}
 	
 
 	

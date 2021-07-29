@@ -1,62 +1,61 @@
 package tn.grp3DL1.banque.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
-public class Pack implements Serializable {
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="TYPE",length=4)
+public abstract class Pack implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	private String TYP;
 	private Long cmpt_depot;
 	private Long cmpt_epargne;
 	private Long crt_liberte;
 
-	private Boolean cmpt_distance;
-	private Boolean assurance;
+	private Long cmpt_distance;
+	private Long assurance;
 	
-	@OneToOne
-	private Client client;
-	public Pack() {
+	@OneToMany(mappedBy="pack",fetch= FetchType.LAZY)
+	private List <Client> clients; 
+	
+		public Pack() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
-	public Pack(Long cmpt_depot, Long cmpt_epargne, Long crt_liberte, Boolean cmpt_distance, Boolean assurance,
-			Client client) {
-		super();
-		this.cmpt_depot = cmpt_depot;
-		this.cmpt_epargne = cmpt_epargne;
-		this.crt_liberte = crt_liberte;
-		this.cmpt_distance = cmpt_distance;
-		this.assurance = assurance;
-		this.client = client;
-	}
+		
+		
+		public Pack(Long id, String tYP, Long cmpt_depot, Long cmpt_epargne, Long crt_liberte, Long cmpt_distance,
+				Long assurance, List<Client> clients) {
+			super();
+			this.id = id;
+			TYP = tYP;
+			this.cmpt_depot = cmpt_depot;
+			this.cmpt_epargne = cmpt_epargne;
+			this.crt_liberte = crt_liberte;
+			this.cmpt_distance = cmpt_distance;
+			this.assurance = assurance;
+			this.clients = clients;
+		}
 
 
-
-	public Pack(Long id, Long cmpt_depot, Long cmpt_epargne, Long crt_liberte, Boolean cmpt_distance,
-			Boolean assurance) {
-		super();
-		this.id = id;
-		this.cmpt_depot = cmpt_depot;
-		this.cmpt_epargne = cmpt_epargne;
-		this.crt_liberte = crt_liberte;
-		this.cmpt_distance = cmpt_distance;
-		this.assurance = assurance;
-	}
-	public Long getId() {
+		public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
@@ -80,29 +79,35 @@ public class Pack implements Serializable {
 	public void setCrt_liberte(Long crt_liberte) {
 		this.crt_liberte = crt_liberte;
 	}
-	public Boolean getCmpt_distance() {
+	
+	
+
+	public Long getCmpt_distance() {
 		return cmpt_distance;
 	}
-	public void setCmpt_distance(Boolean cmpt_distance) {
+	public void setCmpt_distance(Long cmpt_distance) {
 		this.cmpt_distance = cmpt_distance;
 	}
-	public Boolean getAssurance() {
+	public Long getAssurance() {
 		return assurance;
 	}
-	public void setAssurance(Boolean assurance) {
+	public void setAssurance(Long assurance) {
 		this.assurance = assurance;
 	}
-
-
-
-	public Client getClient() {
-		return client;
+	public List<Client> getClients() {
+		return clients;
+	}
+	public void setClients(List<Client> clients) {
+		this.clients = clients;
+	}
+	public String getTYP() {
+		return TYP;
 	}
 
 
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setTYP(String tYP) {
+		TYP = tYP;
 	}
 	
 	

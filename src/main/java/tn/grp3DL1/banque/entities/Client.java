@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @DiscriminatorValue("client")
 public class Client implements Serializable {
@@ -35,10 +37,12 @@ public class Client implements Serializable {
 	@OneToMany(mappedBy="client",fetch= FetchType.LAZY)
 	private Collection <Extrait_bancaire> extrait_bancaires; 
 	
-	@OneToMany(mappedBy="client",fetch= FetchType.LAZY)
-	private Collection <Crédit> crédits;
+	@ManyToOne
+	@JsonIgnore
+	private Pack crédit;
 	
-	@OneToOne
+	@ManyToOne
+	@JsonIgnore
 	private Pack pack;
 	
 	
@@ -50,22 +54,43 @@ public class Client implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
-	
 
-
-	public Collection<Crédit> getCrédits() {
-		return crédits;
+	public Client(Long id, String cin, String nom, String prenom, String profession, String adresse, String mail,
+			Collection<Compte> comptes, Collection<Extrait_bancaire> extrait_bancaires, Pack crédit, Pack pack,
+			Type_clt cible) {
+		super();
+		this.id = id;
+		this.cin = cin;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.profession = profession;
+		this.adresse = adresse;
+		this.mail = mail;
+		this.comptes = comptes;
+		this.extrait_bancaires = extrait_bancaires;
+		this.crédit = crédit;
+		this.pack = pack;
+		this.cible = cible;
 	}
 
 
 
-	public void setCrédits(Collection<Crédit> crédits) {
-		this.crédits = crédits;
+	public Collection<Extrait_bancaire> getExtrait_bancaires() {
+		return extrait_bancaires;
+	}
+
+	public void setExtrait_bancaires(Collection<Extrait_bancaire> extrait_bancaires) {
+		this.extrait_bancaires = extrait_bancaires;
+	}
+
+	public Pack getCrédit() {
+		return crédit;
 	}
 
 
+	public void setCrédit(Pack crédit) {
+		this.crédit = crédit;
+	}
 
 	public Pack getPack() {
 		return pack;

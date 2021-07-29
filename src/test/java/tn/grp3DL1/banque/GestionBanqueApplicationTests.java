@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import tn.grp3DL1.banque.entities.Pack1;
-import tn.grp3DL1.banque.service.PackServiceImpl;
+import tn.grp3DL1.banque.service.Pack1ServiceImpl;
 
 
 @RunWith(SpringRunner.class)
@@ -21,7 +21,7 @@ class GestionBanqueApplicationTests {
 	private static final Logger L = LogManager.getLogger(GestionBanqueApplication.class);
 	
 	@Autowired
-	PackServiceImpl ps1;
+	Pack1ServiceImpl ps1;
 	
 	//@Test
 //public	void testAjouterPack() throws ParseException {
